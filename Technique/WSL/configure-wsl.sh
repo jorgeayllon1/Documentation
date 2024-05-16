@@ -12,20 +12,20 @@ then
     python3 -m pip cache purge
 
     # Installation de docker
-    sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-    sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
-    sudo groupadd docker
-    sudo usermod -aG docker $USER
+    # sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+    # sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    # sudo groupadd docker
+    # sudo usermod -aG docker $USER
 
     # Installation de podman
-    # sudo dnf -y install podman
+    sudo dnf -y install podman
 
-    echo "Need to restart shell to reload groups for docker"
+    # echo "Need to restart shell to reload groups for docker"
 elif [ $1 -eq 3 ]
 then
 
     # Start docker
-    sudo systemctl enable --now docker
+    # sudo systemctl enable --now docker
 
     # Download minikue
     curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm
@@ -34,10 +34,10 @@ then
     cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
-baseurl=https://pkgs.k8s.io/core:/stable:/v1.29/rpm/
+baseurl=https://pkgs.k8s.io/core:/stable:/v1.30/rpm/
 enabled=1
 gpgcheck=1
-gpgkey=https://pkgs.k8s.io/core:/stable:/v1.29/rpm/repodata/repomd.xml.key
+gpgkey=https://pkgs.k8s.io/core:/stable:/v1.30/rpm/repodata/repomd.xml.key
 EOF
 
     # install kubectl
@@ -52,6 +52,7 @@ EOF
     echo 'source <(kubectl completion bash)' >>~/.bashrc
     source ~/.bashrc
 
-    minikube start
+    minikube config set driver podman
+    minikube config set container-runtime cri-o
     echo "Done."
 fi
