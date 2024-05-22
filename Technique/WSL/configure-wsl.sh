@@ -7,25 +7,11 @@ then
 elif [ $1 -eq 2 ]
 then
     sudo dnf -y update && sudo dnf -y upgrade
-
     python3 -m ensurepip --upgrade
     python3 -m pip cache purge
 
-    # Installation de docker
-    # sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-    # sudo dnf -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
-    # sudo groupadd docker
-    # sudo usermod -aG docker $USER
-
-    # Installation de podman
+    # Installation Podman
     sudo dnf -y install podman
-
-    # echo "Need to restart shell to reload groups for docker"
-elif [ $1 -eq 3 ]
-then
-
-    # Start docker
-    # sudo systemctl enable --now docker
 
     # Download minikue
     curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm
@@ -43,15 +29,24 @@ EOF
     # install kubectl
     sudo dnf install -y kubectl bash-completion
 
+    # install helm
+    sudo dnf install -y git
+    curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
     # Clean cache
     sudo dnf clean all
 
+    echo "Done. Need to restart terminal."
+elif [ $1 -eq 3 ]
+then
+    # Configure linux
     source /usr/share/bash-completion/bash_completion
     type _init_completion
     echo 'alias ll="ls --group-directories-first -phAl --color=auto"' >>~/.bashrc
     echo 'source <(kubectl completion bash)' >>~/.bashrc
     source ~/.bashrc
 
+    # Configure minikube
     minikube config set driver podman
     minikube config set container-runtime cri-o
     echo "Done."
