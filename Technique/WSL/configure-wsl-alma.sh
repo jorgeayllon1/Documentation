@@ -13,7 +13,7 @@ then
     # Installation Podman
     sudo dnf -y install podman
 
-    # Download minikue
+    # Download minikube
     curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm
     sudo rpm -Uvh minikube-latest.x86_64.rpm
     rm minikube-latest.x86_64.rpm
