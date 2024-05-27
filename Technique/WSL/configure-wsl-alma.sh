@@ -48,6 +48,6 @@ then
 
     # Configure minikube
     minikube config set driver podman
-    minikube config set container-runtime cri-o
+    minikube config set container-runtime crio
     echo "Done."
 fi
