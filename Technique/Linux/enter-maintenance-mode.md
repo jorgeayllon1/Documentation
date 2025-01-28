@@ -1,13 +1,13 @@
 # Forçage de la maintenance sur Linux
 Pour ce tutoriel, il faut avoir l'accès au grub.  
 ## Etape 1
-Interrompez le lancement du boot et désactivez le SELinux.  
-Il faut pour cela ajouter avant la ligne "initrd":
+Interrompez le démarrage du système puis éditez le grub.
+Ajoutez une interruption du système avant la fonction "initrd":
 ```sh
 rd.break
 ```
 Puis lancer **Ctrl+X**.  
-Le boot process est lancé, vous arrivez dans un context de ram ou en emergency mode.  
+Le boot process est lancé, vous arrivez dans un contexte de ram ou en emergency mode.  
 ## Etape 2
 Remontez le système de fichier en read-write.
 ```
